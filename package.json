@@ -1,0 +1,19 @@
+{
+  "name": "product-feedback-app-back",
+  "version": "1.0.0",
+  "description": "backend for feedback app",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "nika chxaidze",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.3.1",
+    "helmet": "^7.1.0",
+    "mongoose": "^8.5.1",
+    "morgan": "^1.10.0"
+  }
+}
