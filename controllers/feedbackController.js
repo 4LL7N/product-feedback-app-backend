@@ -1,7 +1,7 @@
-exports.test = (rqe,res,next) => {
+const Feedback = require("../models/feedbackModel");
+const { getAll, getOne, deleteOne, updateOne } = require("./handlerFactory");
 
-    res.status(200).json({
-        status:"success",
-        message:'test successful'
-    })
-}
+exports.getAllFeedback = getAll(Feedback)
+exports.getFeedback = getOne(Feedback)
+exports.deleteFeedback = deleteOne(Feedback)
+exports.updateFeedback = updateOne(Feedback)
