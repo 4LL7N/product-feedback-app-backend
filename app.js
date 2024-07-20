@@ -8,7 +8,7 @@ const hpp = require('hpp')
 const compression = require('compression')
 
 
-const test = require('./routes/test');
+const test = require('./routes/feedbackRouter');
 const { mongo } = require("mongoose");
 
 const app = express();
@@ -42,12 +42,16 @@ app.use(xss())
 app.use(compression())
 
 app.use((req, res, next) => {
-    res.requestTime = new Date().toISOString();
-  
+    res.requestTime = new Date().toISOString();  
     next();
-  });
+});
   
 
-app.use('/',test)
+app.use('/api/v1/feedbacks',test)
+
+app.all('*', (req, res, next) => {
+    next(new AppError(`can not find ${req.originalUrl} on this server `, 404));
+});
+
 
 module.exports = app
