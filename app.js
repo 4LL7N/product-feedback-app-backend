@@ -6,10 +6,11 @@ const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
 const compression = require('compression')
-
-
-const test = require('./routes/feedbackRouter');
 const { mongo } = require("mongoose");
+const path = require('path')
+
+const feedbackRouter = require('./routes/feedbackRouter');
+const AppError = require("./utils/appError");
 
 const app = express();
 
@@ -27,7 +28,7 @@ const limiter = rateLimit({
     message:'Too many request from this IP, please try again in an hour'
 })
 
-app.use('/api',limiter)
+// app.use('/api',limiter)
 
 app.use(express.json({limit:'10kb'}))
 
@@ -47,7 +48,7 @@ app.use((req, res, next) => {
 });
   
 
-app.use('/api/v1/feedbacks',test)
+app.use('/api/v1/feedbacks',feedbackRouter)
 
 app.all('*', (req, res, next) => {
     next(new AppError(`can not find ${req.originalUrl} on this server `, 404));
