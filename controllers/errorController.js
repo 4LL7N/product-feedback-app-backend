@@ -27,3 +27,19 @@ const sendErrorDev = (err, req, res) => {
     stack: err.stack,
   });
 };
+
+const sendErrorProd = (err,req,res) => {
+    if(err.isOperational){
+        return res.status(err.statusCode).json({
+            status:err.status,
+            message:err.message
+        })
+    }
+
+    console.error(err);
+
+    return res.status(500).json({
+        status:'error',
+        message:'Something went very wrong'
+    })
+}
