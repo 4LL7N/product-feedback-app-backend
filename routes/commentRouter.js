@@ -13,3 +13,5 @@ router
     .get(getComment)
     .patch(updateComment)
     .delete(deleteComment)
+
+module.exports = router
