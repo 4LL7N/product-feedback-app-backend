@@ -11,6 +11,7 @@ const path = require('path')
 
 const feedbackRouter = require('./routes/feedbackRouter');
 const AppError = require("./utils/appError");
+const globalErrorHandler = require('./controllers/errorController')
 
 const app = express();
 
@@ -54,5 +55,6 @@ app.all('*', (req, res, next) => {
     next(new AppError(`can not find ${req.originalUrl} on this server `, 404));
 });
 
+app.use(globalErrorHandler)
 
 module.exports = app
