@@ -1,4 +1,5 @@
 const Comment = require('../models/commentModel')
+const Feedback = require('../models/feedbackModel')
 const Reply = require('../models/replyMode')
 const AppError = require('../utils/appError')
 const catchAsync = require('../utils/catchAsync')
@@ -37,8 +38,22 @@ exports.getAll = (Model) => catchAsync(async(req,res,next) => {
 
 
 exports.createOne = (Model) => catchAsync(async(req,res,next) => {
-    if(Model == Comment || Model == Reply )req.body.user = req.user
-    
+    if(Model == Comment || Model == Reply ){
+        req.body.user = req.user
+        
+        if(Model == Comment){
+            console.log(req.body.feedback);
+            const feedback = await Feedback.findById(req.body.feedback)
+            console.log(feedback);
+            if(!feedback)return next(new AppError('feedback with this id does not exists',404))
+        }
+        if(Model == Reply){
+            const comment = await Comment.findById(req.body.commentOn)
+            if(!comment)return next(new AppError('Comment with this id does not exists',404))
+        }
+    }
+
+
     const doc = await Model.create(req.body)
 
     res.status(201).json({
