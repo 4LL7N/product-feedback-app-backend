@@ -29,9 +29,22 @@ const feedbackSchema = new mongoose.Schema({
         type:String,
         require:[true,'feedback must have description']
     }
-    // Comments:...
-
+},
+{
+    toJSON:{
+        virtuals:true
+    },
+    toObject:{
+        virtuals:true
+    }
 })
+
+feedbackSchema.virtual('comments',{
+    ref:'Comment',
+    foreignField:'feedback',
+    localField:'_id'
+})
+
 
 const Feedback = mongoose.model('Feedback',feedbackSchema)
 

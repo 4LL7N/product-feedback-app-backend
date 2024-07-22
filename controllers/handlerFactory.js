@@ -1,8 +1,12 @@
+const Comment = require('../models/commentModel')
 const AppError = require('../utils/appError')
 const catchAsync = require('../utils/catchAsync')
 
-exports.getOne = (Model) => catchAsync(async(req,res,next)=>{
-    const doc = await Model.findById(req.params.id)
+exports.getOne = (Model,popOptions) => catchAsync(async(req,res,next)=>{
+    let query = await Model.findById(req.params.id)
+    if(popOptions)query = query.populate(popOptions)
+
+    const doc = await query
 
     if(!doc){
         return next(new AppError('no document found with this id ',404))
@@ -32,6 +36,7 @@ exports.getAll = (Model) => catchAsync(async(req,res,next) => {
 
 
 exports.createOne = (Model) => catchAsync(async(req,res,next) => {
+    if(Model == Comment)req.body.user = req.user
     
     const doc = await Model.create(req.body)
 
