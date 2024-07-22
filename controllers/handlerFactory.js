@@ -1,4 +1,5 @@
 const Comment = require('../models/commentModel')
+const Reply = require('../models/replyMode')
 const AppError = require('../utils/appError')
 const catchAsync = require('../utils/catchAsync')
 
@@ -36,7 +37,7 @@ exports.getAll = (Model) => catchAsync(async(req,res,next) => {
 
 
 exports.createOne = (Model) => catchAsync(async(req,res,next) => {
-    if(Model == Comment)req.body.user = req.user
+    if(Model == Comment || Model == Reply )req.body.user = req.user
     
     const doc = await Model.create(req.body)
 

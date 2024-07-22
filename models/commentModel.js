@@ -19,9 +19,31 @@ const commentSchema = new mongoose.Schema({
         ref:'Feedback',
         require:[true,'Comment must belong to feedback']
     }
-    // replies:[]
+},
+{
+    toJSON:{
+        virtuals:true
+    },
+    toObject:{
+        virtuals:true
+    }
 }) 
 
+commentSchema.virtual('replies',{
+    ref:'Reply',
+    foreignField:'commentOn',
+    localField:'_id'
+})
+
+commentSchema.pre(/^find/, function(next){
+    this.populate({
+        path:'replies',
+        select:'-__v'
+    })
+    next()
+})
+
 const Comment = mongoose.model('Comment',commentSchema)
+
 
 module.exports = Comment
