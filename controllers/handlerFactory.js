@@ -42,9 +42,7 @@ exports.createOne = (Model) => catchAsync(async(req,res,next) => {
         req.body.user = req.user
         
         if(Model == Comment){
-            console.log(req.body.feedback);
             const feedback = await Feedback.findById(req.body.feedback)
-            console.log(feedback);
             if(!feedback)return next(new AppError('feedback with this id does not exists',404))
         }
         if(Model == Reply){
