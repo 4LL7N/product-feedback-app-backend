@@ -12,6 +12,7 @@ const path = require('path')
 const feedbackRouter = require('./routes/feedbackRouter');
 const commentRouter = require('./routes/commentRouter');
 const userRouter = require('./routes/userRouter')
+const replyRouter = require('./routes/replyRouter')
 const {login} = require('./controllers/loginController')
 const AppError = require("./utils/appError");
 const globalErrorHandler = require('./controllers/errorController')
@@ -56,6 +57,7 @@ app.use(login)
 app.use('/api/v1/users',userRouter)
 app.use('/api/v1/feedbacks',feedbackRouter)
 app.use('/api/v1/comments',commentRouter)
+app.use('/api/v1/replies',replyRouter)
 
 app.all('*', (req, res, next) => {
     next(new AppError(`can not find ${req.originalUrl} on this server `, 404));
