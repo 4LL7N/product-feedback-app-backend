@@ -1,6 +1,7 @@
 const Comment = require('../models/commentModel')
 const Feedback = require('../models/feedbackModel')
 const Reply = require('../models/replyMode')
+const APIFeatures = require('../utils/apiFeatures')
 const AppError = require('../utils/appError')
 const catchAsync = require('../utils/catchAsync')
 
@@ -24,8 +25,12 @@ exports.getOne = (Model,popOptions) => catchAsync(async(req,res,next)=>{
 
 exports.getAll = (Model) => catchAsync(async(req,res,next) => {
     
-    const doc = await Model.find()
+    const features = new APIFeatures(Model.find(),req.query)
+        .filter()
+        .sort()
+        .limitFields()
     
+    const doc = await features.query
 
     res.status(200).json({
         status:'success',

@@ -31,5 +31,18 @@ class APIFeatures{
         return this
     }
 
+    limitFields(){
+        if(this.queryStr.fields){
+            const fields = this.queryStr.fields.split(',').join(" ")
+            this.query=this.query.select(fields)
+        }else{
+            this.query=this.query.select('-__v')
+        }
     
+        return this
+
+    }
+
 }
+
+module.exports = APIFeatures
