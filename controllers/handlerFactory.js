@@ -29,6 +29,7 @@ exports.getAll = (Model) => catchAsync(async(req,res,next) => {
         .filter()
         .sort()
         .limitFields()
+        .paginate()
     
     const doc = await features.query
 

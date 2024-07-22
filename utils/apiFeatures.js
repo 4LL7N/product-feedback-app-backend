@@ -43,6 +43,18 @@ class APIFeatures{
 
     }
 
+    paginate(){
+        if(this.queryStr.page && this.queryStr.limit){
+            const page =  this.queryStr.page * 1 || 1;
+            const limit = this.queryStr.limit * 1 || 100
+            const skip = (page - 1) * limit 
+
+            this.query = this.query.skip(skip).limit(limit);
+        }
+        return this
+
+    }
+    
 }
 
 module.exports = APIFeatures
