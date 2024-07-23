@@ -8,7 +8,7 @@ const feedbackSchema = new mongoose.Schema({
     category:{
         type:[String],
         enum:{
-            values:['UX','UI','Enhancement','Bug','Feature'],
+            values:['UX','UI','enhancement','bug','feature'],
             message:'Difficulty can be only: UX,UI,Enhancement,Bug,Feature'
         },
         require:[true,'feedback must have at least one category']
