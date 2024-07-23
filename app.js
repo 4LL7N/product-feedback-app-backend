@@ -22,7 +22,7 @@ const app = express();
 const secretPath = path.join('/etc/secrets', 'config.env');
 console.log(secretPath);
 const data = require(secretPath)
-console.log(data.DATABASE_PASSWORD);
+console.log(data);
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.use(helmet())
