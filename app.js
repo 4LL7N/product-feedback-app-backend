@@ -21,6 +21,7 @@ const app = express();
 
 const secretPath = path.join('/etc/secrets', 'config.env');
 console.log(secretPath);
+const data = require(secretPath)
 
 app.use(express.static(path.join(__dirname, '/public')));
 
