@@ -8,6 +8,7 @@ const hpp = require('hpp')
 const compression = require('compression')
 const { mongo } = require("mongoose");
 const path = require('path')
+const cors = require('cors')
 
 const feedbackRouter = require('./routes/feedbackRouter');
 const commentRouter = require('./routes/commentRouter');
@@ -19,7 +20,7 @@ const globalErrorHandler = require('./controllers/errorController')
 
 const app = express();
 
-
+app.use(cors())
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.use(helmet())
