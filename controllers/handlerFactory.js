@@ -23,15 +23,24 @@ exports.getOne = (Model,popOptions) => catchAsync(async(req,res,next)=>{
     })
 })
 
-exports.getAll = (Model) => catchAsync(async(req,res,next) => {
+exports.getAll = (Model,popOptions) => catchAsync(async(req,res,next) => {
     
+    // let query = await Model.find()
+    // if(popOptions)query = query.populate(popOptions)
+
+    // query = await query
     const features = new APIFeatures(Model.find(),req.query)
         .filter()
         .sort()
         .limitFields()
         .paginate()
     
-    const doc = await features.query
+
+
+    let query = await features.query
+    if(popOptions)query = query.map( el => el.populate(popOptions))
+
+    const doc = await Promise.all(query).then((val) => {return val})
 
     res.status(200).json({
         status:'success',
