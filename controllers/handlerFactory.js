@@ -6,7 +6,10 @@ const AppError = require('../utils/appError')
 const catchAsync = require('../utils/catchAsync')
 
 exports.getOne = (Model,popOptions) => catchAsync(async(req,res,next)=>{
-    let query = await Model.findById(req.params.id)
+    let query = await Feedback.findById(req.params.id)
+    if(!query){
+        return next(new AppError('no document found with this id ',404))
+    }
     if(popOptions)query = query.populate(popOptions)
 
     const doc = await query

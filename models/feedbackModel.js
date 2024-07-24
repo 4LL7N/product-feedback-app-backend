@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const feedbackSchema = new mongoose.Schema({
     title:{
@@ -28,6 +28,10 @@ const feedbackSchema = new mongoose.Schema({
     description:{
         type:String,
         require:[true,'feedback must have description']
+    },
+    commentNo:{
+        type:Number,
+        default:0
     }
 },
 {
